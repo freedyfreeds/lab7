@@ -302,7 +302,8 @@ The list should contain, in order:
 3. a square at (-3, -2.5) with size 4.3
 ....................................................................*)
 
-let s_list = [rect (1., 1.) 4. 5.; circle (0., -4.) 10]  ;;
+let s_list = [new rect (1., 1.) 4. 5.; new circle (0., -4.) 10.;
+              new square (-3., -2.5) 4.3] ;;
 
 (* As you might recall, lists can only contain objects of the same
 type.  Why does the type system not show an error with your answer to
@@ -352,9 +353,11 @@ Exercise 3A: Implement the square_rect class which inherits all of its
 methods from its parent.
 ......................................................................*)
 
-(* UNCOMMENT ME AND COMPLETE
-class square_rect (p : point) (s : float) : shape = ...
- *)
+class square_rect (p : point) (s : float) : shape =
+object
+inherit rect p s s as super
+end;;
+
 
 (*......................................................................
 Exercise 3B: Now, implement a square_center_scale class that inherits
@@ -433,11 +436,14 @@ that implements a quad class type. Hint: By taking advantage of
 existing classes, you should only need to implement a single method.
 ......................................................................*)
 
-(* UNCOMMENT ME
+(UNCOMMENT ME
 class rect_quad (p : point) (w : float) (h : float) : quad =
   object
+  inherit quad
+
+  method! sides = w * h * w * h
   end ;;
- *)
+
 
 (*......................................................................
 Exercise 4B: Complete a class, square_quad, that represents a square
